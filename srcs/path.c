@@ -6,11 +6,38 @@
 /*   By: arudy <arudy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/23 11:36:18 by arudy             #+#    #+#             */
-/*   Updated: 2022/01/27 12:44:29 by arudy            ###   ########.fr       */
+/*   Updated: 2022/01/27 14:55:29 by arudy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../pipex.h"
+
+void	check_args(int ac, char **av)
+{
+	size_t	i;
+
+	i = 0;
+	if (av[2] == NULL || av[3] == NULL || ac != 5)
+	{
+		ft_putstr_fd("Error\nEx args : < file1 cmd1 | cmd2 > file2\n", 2);
+		exit (EXIT_FAILURE);
+	}
+	while (av[2][i] == ' ')
+		i++;
+	if (i == ft_strlen(av[2]))
+	{
+		ft_putstr_fd("Error\nEx args : < file1 cmd1 | cmd2 > file2\n", 2);
+		exit (EXIT_FAILURE);
+	}
+	i = 0;
+	while (av[3][i] == ' ')
+		i++;
+	if (i == ft_strlen(av[3]))
+	{
+		ft_putstr_fd("Error\nEx args : < file1 cmd1 | cmd2 > file2\n", 2);
+		exit (EXIT_FAILURE);
+	}
+}
 
 int	add_cmd(char **data, char *cmd)
 {
@@ -30,7 +57,7 @@ int	add_cmd(char **data, char *cmd)
 	return (0);
 }
 
-char	*check_access(char **strs, t_data *data)
+char	*check_access(int c, char **strs, t_data *data)
 {
 	int		i;
 	int		j;
@@ -40,11 +67,11 @@ char	*check_access(char **strs, t_data *data)
 	j = 0;
 	while (strs[i])
 	{
-		if (access(strs[i], F_OK))
+		if (access(strs[i], F_OK) == 0)
 		{
 			path = malloc(sizeof(char) * ft_strlen(strs[i]) + 1);
 			if (!path)
-				return (cmd_not_found(data));
+				return (cmd_not_found(data, c));
 			while (strs && strs[i][j])
 			{
 				path[j] = strs[i][j];
@@ -55,7 +82,7 @@ char	*check_access(char **strs, t_data *data)
 		}
 		i++;
 	}
-	return (cmd_not_found(data));
+	return (cmd_not_found(data, c));
 }
 
 t_data	*fill_data(char *str, t_data *data)
@@ -64,12 +91,12 @@ t_data	*fill_data(char *str, t_data *data)
 		|| add_cmd(data->child2, data->cmd2[0]) == 1)
 		data_error(data, str);
 	free(str);
-	data->path1 = check_access(data->child1, data);
-	data->path2 = check_access(data->child2, data);
+	data->path1 = check_access(1, data->child1, data);
+	data->path2 = check_access(2, data->child2, data);
 	return (data);
 }
 
-t_data	*find_data(char **env, char **av)
+t_data	*find_data(int ac, char **av, char **env)
 {
 	int		i;
 	char	*full_path;
@@ -77,6 +104,7 @@ t_data	*find_data(char **env, char **av)
 
 	i = 0;
 	full_path = NULL;
+	check_args(ac, av);
 	while (env[i++])
 	{
 		if (!ft_strncmp("PATH=", env[i], 4))

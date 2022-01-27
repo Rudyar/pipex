@@ -6,11 +6,19 @@
 /*   By: arudy <arudy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 12:20:37 by arudy             #+#    #+#             */
-/*   Updated: 2022/01/27 12:44:58 by arudy            ###   ########.fr       */
+/*   Updated: 2022/01/27 14:22:49 by arudy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../pipex.h"
+
+void	data_error(t_data *data, char *path)
+{
+	ft_putstr_fd("Can't init data\n", 2);
+	free_struct(data);
+	free(path);
+	exit (EXIT_FAILURE);
+}
 
 t_data	*init_data(char *path, char **av)
 {
@@ -40,9 +48,13 @@ t_data	*init_data(char *path, char **av)
 	return (data);
 }
 
-char	*cmd_not_found(t_data *data)
+char	*cmd_not_found(t_data *data, int c)
 {
-	ft_putstr_fd("")
+	if (c == 1)
+		ft_putstr_fd(data->cmd1[0], 2);
+	else if (c == 2)
+		ft_putstr_fd(data->cmd2[0], 2);
+	ft_putstr_fd(" : command not found\n", 2);
 	free_struct(data);
 	exit (EXIT_FAILURE);
 }

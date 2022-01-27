@@ -6,40 +6,11 @@
 /*   By: arudy <arudy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/23 10:26:04 by arudy             #+#    #+#             */
-/*   Updated: 2022/01/27 12:30:37 by arudy            ###   ########.fr       */
+/*   Updated: 2022/01/27 15:31:43 by arudy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../pipex.h"
-
-void	check_args(int ac, char **av)
-{
-	size_t	i;
-
-	i = 0;
-	if (av[2] == NULL || av[3] == NULL || ac != 5)
-	{
-		ft_putstr_fd("Error\nEx args : < file1 cmd1 | cmd2 > file2\n", 2);
-		exit (EXIT_FAILURE);
-	}
-	while (av[2][i] == ' ')
-		i++;
-	if (i == ft_strlen(av[2]))
-	{
-		ft_putstr_fd(av[2], 2);
-		ft_putstr_fd(" : Command not found\n", 2);
-		exit (EXIT_FAILURE);
-	}
-	i = 0;
-	while (av[3][i] == ' ')
-		i++;
-	if (i == ft_strlen(av[3]))
-	{
-		ft_putstr_fd(av[3], 2);
-		ft_putstr_fd(" : Command not found\n", 2);
-		exit (EXIT_FAILURE);
-	}
-}
 
 void	ft_putstr_fd(char *s, int fd)
 {
@@ -92,13 +63,12 @@ int	main(int ac, char **av, char **env)
 
 	if (env[0] == NULL)
 	{
-		ft_putstr_fd("Can't find data in env\n", 2);
+		ft_putstr_fd("Can't find env\n", 2);
 		exit (EXIT_FAILURE);
 	}
-	check_args(ac, av);
-	data = find_data(env, av);
-	// pipex(env, av, &data);
+	data = find_data(ac, av, env);
+	pipex(env, av, data);
 	free_struct(data);
-	// close_all(&data);
+	// close_all(data);
 	return (0);
 }
