@@ -6,7 +6,7 @@
 /*   By: arudy <arudy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/23 11:36:18 by arudy             #+#    #+#             */
-/*   Updated: 2022/01/27 14:55:29 by arudy            ###   ########.fr       */
+/*   Updated: 2022/01/27 18:08:27 by arudy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ char	*check_access(int c, char **strs, t_data *data)
 	return (cmd_not_found(data, c));
 }
 
-t_data	*fill_data(char *str, t_data *data)
+void	fill_data(char *str, t_data *data)
 {
 	if (add_cmd(data->child1, data->cmd1[0]) == 1
 		|| add_cmd(data->child2, data->cmd2[0]) == 1)
@@ -93,14 +93,12 @@ t_data	*fill_data(char *str, t_data *data)
 	free(str);
 	data->path1 = check_access(1, data->child1, data);
 	data->path2 = check_access(2, data->child2, data);
-	return (data);
 }
 
-t_data	*find_data(int ac, char **av, char **env)
+void	find_data(int ac, char **av, char **env, t_data *data)
 {
 	int		i;
 	char	*full_path;
-	t_data	*data;
 
 	i = 0;
 	full_path = NULL;
@@ -120,6 +118,6 @@ t_data	*find_data(int ac, char **av, char **env)
 		ft_putstr_fd("Can't find PATH in env\n", 2);
 		exit (EXIT_FAILURE);
 	}
-	data = init_data(full_path, av);
-	return (fill_data(full_path, data));
+	init_data(full_path, av, data);
+	fill_data(full_path, data);
 }

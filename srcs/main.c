@@ -6,7 +6,7 @@
 /*   By: arudy <arudy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/23 10:26:04 by arudy             #+#    #+#             */
-/*   Updated: 2022/01/27 15:31:43 by arudy            ###   ########.fr       */
+/*   Updated: 2022/01/27 19:04:53 by arudy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,27 +48,23 @@ void	free_struct(t_data *data)
 	free_strs(data->cmd2);
 	free(data->path1);
 	free(data->path2);
-	free(data);
 }
 
-void	close_all(t_data *data)
+int	main(int ac, char **av, char **envp)
 {
-	close(data->infile);
-	close(data->outfile);
-}
+	t_data	data;
 
-int	main(int ac, char **av, char **env)
-{
-	t_data	*data;
-
-	if (env[0] == NULL)
+	if (envp[0] == NULL)
 	{
 		ft_putstr_fd("Can't find env\n", 2);
 		exit (EXIT_FAILURE);
 	}
-	data = find_data(ac, av, env);
-	pipex(env, av, data);
-	free_struct(data);
-	// close_all(data);
+	find_data(ac, av, envp, &data);
+	pipex(envp, av, &data);
+	free_struct(&data);
+	if (close(data.infile) == -1)
+		exit (EXIT_FAILURE);
+	if (close(data.outfile) == -1)
+		exit (EXIT_FAILURE);
 	return (0);
 }

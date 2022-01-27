@@ -6,7 +6,7 @@
 /*   By: arudy <arudy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 12:20:37 by arudy             #+#    #+#             */
-/*   Updated: 2022/01/27 14:22:49 by arudy            ###   ########.fr       */
+/*   Updated: 2022/01/27 18:08:29 by arudy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,8 @@ void	data_error(t_data *data, char *path)
 	exit (EXIT_FAILURE);
 }
 
-t_data	*init_data(char *path, char **av)
+void	init_data(char *path, char **av, t_data *data)
 {
-	t_data	*data;
-
-	data = malloc(sizeof(*data));
-	if (!data)
-		return (0);
 	data->child1 = NULL;
 	data->child2 = NULL;
 	data->cmd1 = NULL;
@@ -45,7 +40,6 @@ t_data	*init_data(char *path, char **av)
 	data->child2 = ft_split(path, ':');
 	if (!data->child2)
 		data_error(data, path);
-	return (data);
 }
 
 char	*cmd_not_found(t_data *data, int c)
@@ -56,5 +50,5 @@ char	*cmd_not_found(t_data *data, int c)
 		ft_putstr_fd(data->cmd2[0], 2);
 	ft_putstr_fd(" : command not found\n", 2);
 	free_struct(data);
-	exit (EXIT_FAILURE);
+	exit (127);
 }
