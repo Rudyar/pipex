@@ -6,7 +6,7 @@
 /*   By: arudy <arudy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/23 10:26:51 by arudy             #+#    #+#             */
-/*   Updated: 2022/01/27 19:03:24 by arudy            ###   ########.fr       */
+/*   Updated: 2022/01/27 19:28:28 by arudy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	init_data(char *path, char **av, t_data *data);
 size_t	ft_strlen(const char *str);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 char	*cmd_not_found(t_data *data, int c);
+char	*ft_strdup(const char *src);
 char	*ft_strjoin(char *s1, char *s2);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	**ft_split(char const *s, char c);

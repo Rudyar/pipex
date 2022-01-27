@@ -6,7 +6,7 @@
 /*   By: arudy <arudy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 12:20:37 by arudy             #+#    #+#             */
-/*   Updated: 2022/01/27 18:08:29 by arudy            ###   ########.fr       */
+/*   Updated: 2022/01/27 19:27:08 by arudy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,26 @@ void	init_data(char *path, char **av, t_data *data)
 	data->child2 = ft_split(path, ':');
 	if (!data->child2)
 		data_error(data, path);
+}
+
+char	*ft_strdup(const char *src)
+{
+	int		i;
+	int		len;
+	char	*dst;
+
+	i = 0;
+	len = ft_strlen(src);
+	dst = malloc(sizeof(char) * len + 1);
+	if (!dst)
+		return (0);
+	while (src[i])
+	{
+		dst[i] = src[i];
+		i++;
+	}
+	dst[i] = '\0';
+	return (dst);
 }
 
 char	*cmd_not_found(t_data *data, int c)
