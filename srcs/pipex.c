@@ -6,7 +6,7 @@
 /*   By: arudy <arudy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 18:23:52 by arudy             #+#    #+#             */
-/*   Updated: 2022/01/28 10:30:16 by arudy            ###   ########.fr       */
+/*   Updated: 2022/01/28 15:09:54 by arudy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ void	child_1(char **av, char **env, t_data *data)
 	ft_putstr_fd(av[2], 2);
 	ft_putstr_fd(": can't execute command\n", 2);
 	free_struct(data);
+	close(STDIN_FILENO);
+	close(STDOUT_FILENO);
 	close(data->pipe_fd[1]);
 	close(data->infile);
 	close(data->outfile);
