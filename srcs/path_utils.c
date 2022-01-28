@@ -6,7 +6,7 @@
 /*   By: arudy <arudy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 12:20:37 by arudy             #+#    #+#             */
-/*   Updated: 2022/01/27 19:27:08 by arudy            ###   ########.fr       */
+/*   Updated: 2022/01/28 10:30:53 by arudy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ char	*cmd_not_found(t_data *data, int c)
 		ft_putstr_fd(data->cmd1[0], 2);
 	else if (c == 2)
 		ft_putstr_fd(data->cmd2[0], 2);
-	ft_putstr_fd(" : command not found\n", 2);
+	ft_putstr_fd(": command not found\n", 2);
 	free_struct(data);
 	exit (127);
 }
